@@ -1,18 +1,56 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <nav>
+      <button>Create User</button>
+      <button>Create Post</button>
+    </nav>
+    <div class="side-nav">
+      <app-user-list></app-user-list>
+      <app-post-list></app-post-list>
+    </div>
+    <div class="main"></div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import UserList from "../components/UserList.vue";
+import PostList from "../components/PostList.vue";
 
 export default {
-  name: "home",
   components: {
-    HelloWorld
+    appUserList: UserList,
+    appPostList: PostList
   }
 };
 </script>
+
+
+<style scoped>
+.home {
+  display: grid;
+  grid-template-columns: 20vw 1fr;
+  grid-template-rows: 1fr 90vh 1fr;
+}
+nav {
+  grid-row: 1;
+  grid-column: span 2;
+  border-bottom: 1px solid rgba(226, 226, 226, 0.67);
+  padding-bottom: 5px;
+}
+
+nav button {
+  float: left;
+  margin-right: 5px;
+}
+
+.side-nav {
+  grid-column: 1;
+  grid-row: 2;
+  padding-top: 10px;
+}
+
+.main {
+  grid-column: 2;
+  grid-row: 2;
+}
+</style>
