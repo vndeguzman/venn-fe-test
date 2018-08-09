@@ -16,10 +16,11 @@
 import UserList from "../components/UserList.vue";
 import PostList from "../components/PostList.vue";
 
+
 export default {
   components: {
     appUserList: UserList,
-    appPostList: PostList
+    appPostList: PostList,
   }
 };
 </script>
@@ -31,6 +32,7 @@ export default {
   grid-template-columns: 20vw 1fr;
   grid-template-rows: 1fr 90vh 1fr;
 }
+
 nav {
   grid-row: 1;
   grid-column: span 2;
@@ -41,12 +43,30 @@ nav {
 nav button {
   float: left;
   margin-right: 5px;
+  background-color: #6295ac;
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+  color: #fff;
+}
+
+nav button:hover {
+  cursor: pointer;
 }
 
 .side-nav {
   grid-column: 1;
   grid-row: 2;
   padding-top: 10px;
+}
+
+.side-nav > div {
+  height: 45vh;
+}
+
+.side-nav > div:nth-child(2) {
+  margin-top: 2vh;
+  height: 43vh;
 }
 
 .main {

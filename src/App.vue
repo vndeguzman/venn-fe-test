@@ -7,10 +7,23 @@
     </footer>
   </div>
 </template>
+<script>
+  import NprogressContainer from 'vue-nprogress/src/NprogressContainer'
+
+  export default {
+    components: {
+      NprogressContainer
+    }
+  }
+</script>
 
 <style>
 body {
   overflow: hidden;
+}
+
+#nprogress .bar {
+  background: #5a92a8 !important;
 }
 
 #app {

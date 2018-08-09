@@ -24,7 +24,7 @@ export default {
 
 <style scoped>
 .search-bar {
-  width: 100%;
+  width: 90%;
   position: relative;
 }
 
@@ -32,8 +32,9 @@ export default {
   width: 100%;
   height: 20px;
   border-radius: 5px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #ebebeb;
   padding: 5px;
+  background-color: #fff;
 }
 
 .search-bar .icon {
