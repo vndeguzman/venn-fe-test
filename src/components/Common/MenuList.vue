@@ -2,7 +2,12 @@
   <div class="menu-list">
     <div class="list-container">
       <ul class="list">
-        <li class="list-item" v-for="item in filteredList" v-bind:key="item[track]">
+        <li
+          class="list-item"
+          v-for="item in filteredList"
+          @click="clickHandler(item); setSelectedItem(item[track]);"
+          :class="{ 'active': selectedItem === item[track]}"
+        >
           <span class="text" :title="item[track]">
             <icon class="folder-icon" name="folder"></icon> {{ item[track] }}
           </span>
@@ -14,17 +19,31 @@
 </template>
 
 <script>
+import EventBus from '../../event-bus';
+
 export default {
+  data() {
+    return {
+      selectedItem: null,
+      activeClientComponent: null
+    }
+  },
   props: {
     list: Array,
     track: String,
-    heading: String,
+    clientComponent: String,
     query: String,
-    notFoundApi: Boolean
+    notFoundApi: Boolean,
+    clickHandler: Function
+  },
+  methods: {
+    setSelectedItem: function(item) {
+      this.selectedItem = item;
+    }
   },
   computed: {
     filteredList: function() {
-      return this.list.filter(item => {
+      return this.$_.orderBy(this.list, this.track).filter(item => {
         let itemVal = item[this.track].toLowerCase();
         let queryVal = this.query.toLowerCase();
 
@@ -86,21 +105,8 @@ export default {
   color: #adadad;
 }
 
-::-webkit-scrollbar {
-  width: 3px;
+.active {
+  background-color: #ebebeb;
 }
 
-::-webkit-scrollbar-track {
-  background: #dbdbdb;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #bfbfbf;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #dddddd;
-}
 </style>

@@ -7,11 +7,11 @@
       </div>
     </div>
     <app-menu-list
-      heading="Posts"
       :list="postList"
       track="title"
       :query="query"
       :not-found-api="notFoundApi"
+      :click-handler="getPostCommentListByPostId"
       @filter-no-result="getPostByTitle(query)"
     >
     </app-menu-list>
@@ -19,8 +19,9 @@
 </template>
 
 <script>
-import SearchBar from "./shared/SearchBar.vue";
-import MenuList from "./shared/MenuList.vue";
+import SearchBar from "../Common/SearchBar.vue";
+import MenuList from "../Common/MenuList.vue";
+import EventBus from "../../event-bus";
 
 const api = process.env.VUE_APP_API_BASE_URL;
 export default {
@@ -55,7 +56,23 @@ export default {
       } else {
         console.log(err);
       }
-    }
+    },
+    async getPostCommentListByPostId(post) {
+      let err, response;
+      [err, response] = await this.$to(this.$http.get(`${api}/comments?postId=${post.id}`));
+      if (!err) {
+        let postCommentList = await response.json();
+        if (await postCommentList.length > 0) {
+          let payload = {
+            post: post,
+            postCommentList: postCommentList
+          };
+          EventBus.$emit('postCommentListReceived', payload);
+        }
+      } else {
+        console.log(err);
+      }
+    },
   },
   components: {
     appSearchBar: SearchBar,
@@ -64,12 +81,16 @@ export default {
 
   mounted() {
     this.getPosts();
+    EventBus.$on('postCreated', (newPost) => {
+      this.postList.push(newPost);
+    })
   }
 };
 </script>
 <style>
 .post-list {
   overflow-y: auto;
+  overflow-x: hidden;
   text-align: left;
 }
 .freeze-pane {

@@ -1,6 +1,7 @@
 <template>
   <div class="search-bar">
     <input
+      class="form-control"
       ref="input"
       :value="value"
       @input="updateValue($event.target.value)"
@@ -26,15 +27,6 @@ export default {
 .search-bar {
   width: 90%;
   position: relative;
-}
-
-.search-bar input {
-  width: 100%;
-  height: 20px;
-  border-radius: 5px;
-  border: 1px solid #ebebeb;
-  padding: 5px;
-  background-color: #fff;
 }
 
 .search-bar .icon {

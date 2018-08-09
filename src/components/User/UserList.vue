@@ -7,10 +7,11 @@
       </div>
     </div>
     <app-menu-list
-      :list="userList"
       track="username"
+      :list="userList"
       :query="query"
       :not-found-api="notFoundApi"
+      :click-handler="getPostsByUserId"
       @filter-no-result="getUserByUsername(query)"
     >
     </app-menu-list>
@@ -18,8 +19,9 @@
 </template>
 
 <script>
-import SearchBar from "./shared/SearchBar.vue";
-import MenuList from "./shared/MenuList.vue";
+import SearchBar from "../Common/SearchBar.vue";
+import MenuList from "../Common/MenuList.vue";
+import EventBus from '../../event-bus';
 
 const api = process.env.VUE_APP_API_BASE_URL;
 export default {
@@ -41,7 +43,6 @@ export default {
       }
     },
     async getUserByUsername(username) {
-      console.log("hello");
       let err, response;
       [err, response] = await this.$to(
         this.$http.get(`${api}/users?username=${username}`)
@@ -57,21 +58,44 @@ export default {
       } else {
         console.log(err);
       }
-    }
+    },
+    async getPostsByUserId(user) {
+      let err, response;
+      [err, response] = await this.$to(
+        this.$http.get(`${api}/posts?userId=${user.id}`)
+      );
+      if (!err) {
+        let postsByUserId = await response.json();
+        if (await postsByUserId.length > 0) {
+          let payload = {
+            username: user.username,
+            posts: postsByUserId
+          };
+          EventBus.$emit('userPostListReceived', payload);
+        }
+      } else {
+        console.log(err);
+      }
+    },
   },
   components: {
     appSearchBar: SearchBar,
     appMenuList: MenuList
   },
-
   mounted() {
     this.getUsers();
+    EventBus.$on('userCreated', (newUser) => {
+      this.userList.push(newUser);
+      this.userList = this.$_.orderBy(this.userList, 'username');
+      console.log(this.userList);
+    })
   }
 };
 </script>
 <style>
 .user-list {
   overflow-y: auto;
+  overflow-x: hidden;
   text-align: left;
 }
 .freeze-pane {

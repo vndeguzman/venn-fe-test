@@ -10,16 +10,33 @@ import App from "./App.vue";
 import router from "./router";
 import "./registerServiceWorker";
 import toPlugin from "./plugins/toPlugin";
+import lodashPlugin from "./plugins/lodashPlugin";
 
 // Load plugins
 Vue.component("icon", Icon);
 Vue.use(toPlugin);
+Vue.use(lodashPlugin);
 Vue.use(NProgress);
 Vue.use(VueResource);
 
 const nprogress = new NProgress({ parent: "body", showSpinner: false });
 
 Vue.config.productionTip = false;
+
+Vue.filter("titlelize", titlelize);
+Vue.filter("capitalize", capitalize);
+
+Vue.filter("nicknemize", function(value) {
+  if (!value) {
+    return "";
+  }
+  value = value.toString().split(" ")[0];
+  return titlelize(value);
+});
+
+Vue.component('modal', {
+  template: '#modal-template'
+})
 
 new Vue({
   router,
@@ -28,3 +45,20 @@ new Vue({
 }).$mount("#app");
 
 
+function titlelize(value) {
+  if (!value) {
+    return "";
+  }
+  value = value.toString();
+  return value.split(' ').map((word)=> {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(' ');
+}
+
+function capitalize(value) {
+  if (!value) {
+    return "";
+  }
+  value = value.split("");
+  return [value.shift().toUpperCase(), ...value].join("");
+}
