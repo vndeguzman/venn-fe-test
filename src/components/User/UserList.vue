@@ -21,7 +21,7 @@
 <script>
 import SearchBar from "../Common/SearchBar.vue";
 import MenuList from "../Common/MenuList.vue";
-import EventBus from '../../event-bus';
+import EventBus from "../../event-bus";
 
 const api = process.env.VUE_APP_API_BASE_URL;
 export default {
@@ -66,17 +66,17 @@ export default {
       );
       if (!err) {
         let postsByUserId = await response.json();
-        if (await postsByUserId.length > 0) {
+        if ((await postsByUserId.length) > 0) {
           let payload = {
             username: user.username,
             posts: postsByUserId
           };
-          EventBus.$emit('userPostListReceived', payload);
+          EventBus.$emit("userPostListReceived", payload);
         }
       } else {
         console.log(err);
       }
-    },
+    }
   },
   components: {
     appSearchBar: SearchBar,
@@ -84,11 +84,11 @@ export default {
   },
   mounted() {
     this.getUsers();
-    EventBus.$on('userCreated', (newUser) => {
+    EventBus.$on("userCreated", newUser => {
       this.userList.push(newUser);
-      this.userList = this.$_.orderBy(this.userList, 'username');
+      this.userList = this.$_.orderBy(this.userList, "username");
       console.log(this.userList);
-    })
+    });
   }
 };
 </script>

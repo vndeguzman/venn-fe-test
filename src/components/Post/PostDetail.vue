@@ -4,6 +4,7 @@
       <h2>"{{ post.title | titlelize }}"</h2>
       <p>{{ post.body | capitalize }}</p>
       <div class="comment-list">
+        <div class="heading">Comments</div>
         <div class="comment" v-for="comment in postCommentList">
           <span class="name">{{ comment.name | nicknemize }}</span>
           <span class="email">&nbsp;({{ comment.email }})</span>
@@ -17,28 +18,33 @@
 </template>
 
 <script>
-  import EventBus from '../../event-bus';
-  export default {
-    data() {
-      return {
-        post: {},
-        postCommentList: []
-      };
-    },
-    mounted() {
-      EventBus.$on('postCommentListReceived', (payload) => {
-        this.post = payload.post;
-        this.postCommentList = payload.postCommentList;
-      });
-    }
+import EventBus from "../../event-bus";
+export default {
+  data() {
+    return {
+      post: {},
+      postCommentList: []
+    };
+  },
+  mounted() {
+    EventBus.$on("postCommentListReceived", payload => {
+      this.post = payload.post;
+      this.postCommentList = payload.postCommentList;
+    });
   }
+};
 </script>
 
 <style scoped>
+@media only screen and (max-width: 600px) {
+  .post-detail {
+    width: 70vw;
+  }
+}
+
 .post-detail {
   overflow-x: hidden;
   height: 100%;
-  width: 70vw;
 }
 .post-item {
   flex: 1;
@@ -53,6 +59,13 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+
+.heading {
+  position: sticky;
+  top: -10px;
+  background-color: #fff;
+  padding: 20px 20px 10px 10px;
 }
 
 .comment {
@@ -74,6 +87,4 @@
 .comment .body {
   color: #333;
 }
-
-
 </style>

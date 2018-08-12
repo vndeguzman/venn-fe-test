@@ -4,18 +4,18 @@
   </div>
 </template>
 <script>
-import NprogressContainer from 'vue-nprogress/src/NprogressContainer';
+import NprogressContainer from "vue-nprogress/src/NprogressContainer";
 
 export default {
   data() {
     return {
       showModal: true
-    }
+    };
   },
   components: {
     NprogressContainer
   }
-}
+};
 </script>
 
 <style>

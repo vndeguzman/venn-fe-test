@@ -44,7 +44,9 @@ export default {
     },
     async getPostByTitle(title) {
       let err, response;
-      [err, response] = await this.$to(this.$http.get(`${api}/posts?title=${title}`));
+      [err, response] = await this.$to(
+        this.$http.get(`${api}/posts?title=${title}`)
+      );
       if (!err) {
         let list = await response.json();
         if (list.length > 0) {
@@ -59,20 +61,22 @@ export default {
     },
     async getPostCommentListByPostId(post) {
       let err, response;
-      [err, response] = await this.$to(this.$http.get(`${api}/comments?postId=${post.id}`));
+      [err, response] = await this.$to(
+        this.$http.get(`${api}/comments?postId=${post.id}`)
+      );
       if (!err) {
         let postCommentList = await response.json();
-        if (await postCommentList.length > 0) {
+        if ((await postCommentList.length) > 0) {
           let payload = {
             post: post,
             postCommentList: postCommentList
           };
-          EventBus.$emit('postCommentListReceived', payload);
+          EventBus.$emit("postCommentListReceived", payload);
         }
       } else {
         console.log(err);
       }
-    },
+    }
   },
   components: {
     appSearchBar: SearchBar,
@@ -81,9 +85,9 @@ export default {
 
   mounted() {
     this.getPosts();
-    EventBus.$on('postCreated', (newPost) => {
+    EventBus.$on("postCreated", newPost => {
       this.postList.push(newPost);
-    })
+    });
   }
 };
 </script>

@@ -30,7 +30,7 @@ import PostList from "../components/Post/PostList.vue";
 import PostDetail from "../components/Post/PostDetail.vue";
 import CreatePost from "../components/Post/CreatePost.vue";
 import EventBus from "../event-bus";
-import Modal from '../components/Common/Modal.vue';
+import Modal from "../components/Common/Modal.vue";
 
 export default {
   data() {
@@ -38,19 +38,19 @@ export default {
       showCreateUserModal: false,
       showCreatePostModal: false,
       activeMain: undefined
-    }
+    };
   },
   mounted() {
-    EventBus.$on('userPostListReceived', () => {
-      this.activeMain = 'UserList';
+    EventBus.$on("userPostListReceived", () => {
+      this.activeMain = "UserList";
     });
-    EventBus.$on('postCommentListReceived', () => {
-      this.activeMain = 'PostList';
+    EventBus.$on("postCommentListReceived", () => {
+      this.activeMain = "PostList";
     });
-    EventBus.$on('userCreated', () => {
+    EventBus.$on("userCreated", () => {
       this.showCreateUserModal = false;
     });
-    EventBus.$on('postCreated', () => {
+    EventBus.$on("postCreated", () => {
       this.showCreatePostModal = false;
     });
   },

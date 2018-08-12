@@ -15,25 +15,25 @@
 </template>
 
 <script>
-  import EventBus from '../../event-bus';
-  export default {
-    data() {
-      return {
-        username: '',
-        userPostList: []
-      };
-    },
-    mounted() {
-      EventBus.$on('userPostListReceived', (payload) => {
-        this.username = payload.username;
-        this.userPostList = payload.posts;
-      });
-    }
+import EventBus from "../../event-bus";
+export default {
+  data() {
+    return {
+      username: "",
+      userPostList: []
+    };
+  },
+  mounted() {
+    EventBus.$on("userPostListReceived", payload => {
+      this.username = payload.username;
+      this.userPostList = payload.posts;
+    });
   }
+};
 </script>
 
 <style scoped>
-.user-detail  {
+.user-detail {
   overflow-x: hidden;
   height: 100%;
 }

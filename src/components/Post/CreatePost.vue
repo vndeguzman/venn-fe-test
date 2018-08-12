@@ -26,39 +26,41 @@
 </template>
 
 <script>
-  import Modal from '../Common/Modal.vue';
-  import EventBus from '../../event-bus';
+import Modal from "../Common/Modal.vue";
+import EventBus from "../../event-bus";
 
-  const api = process.env.VUE_APP_API_BASE_URL;
-  export default {
-    data() {
-      return {
-        EventBus: EventBus,
-        form: {
-          name: '',
-          username: '',
-          city: '',
-          street: ''
-        }
+const api = process.env.VUE_APP_API_BASE_URL;
+export default {
+  data() {
+    return {
+      EventBus: EventBus,
+      form: {
+        name: "",
+        username: "",
+        city: "",
+        street: ""
       }
-    },
-    methods: {
-      async submit() {
-        let err, response;
-        [err, response] = await this.$to(this.$http.post(`${api}/posts`, this.form));
-        if (!err) {
-          let responseObj = await response.json();
-          EventBus.$emit('postCreated', responseObj);
-          console.log(responseObj);
-        } else {
-          console.log(err);
-        }
+    };
+  },
+  methods: {
+    async submit() {
+      let err, response;
+      [err, response] = await this.$to(
+        this.$http.post(`${api}/posts`, this.form)
+      );
+      if (!err) {
+        let responseObj = await response.json();
+        EventBus.$emit("postCreated", responseObj);
+        console.log(responseObj);
+      } else {
+        console.log(err);
       }
-    },
-    components: {
-      Modal
     }
+  },
+  components: {
+    Modal
   }
+};
 </script>
 <style scoped>
 #content {

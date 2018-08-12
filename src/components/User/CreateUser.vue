@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import Modal from '../Common/Modal.vue';
-import EventBus from '../../event-bus';
+import Modal from "../Common/Modal.vue";
+import EventBus from "../../event-bus";
 
 const api = process.env.VUE_APP_API_BASE_URL;
 export default {
@@ -36,28 +36,30 @@ export default {
     return {
       EventBus: EventBus,
       form: {
-        name: '',
-        username: '',
-        city: '',
-        street: ''
+        name: "",
+        username: "",
+        city: "",
+        street: ""
       }
-    }
+    };
   },
   methods: {
     async submit() {
-        let err, response;
-        [err, response] = await this.$to(this.$http.post(`${api}/users`, this.form));
-        if (!err) {
-          let responseObj = await response.json();
-          EventBus.$emit('userCreated', responseObj);
-          console.log(responseObj);
-        } else {
-          console.log(err);
-        }
+      let err, response;
+      [err, response] = await this.$to(
+        this.$http.post(`${api}/users`, this.form)
+      );
+      if (!err) {
+        let responseObj = await response.json();
+        EventBus.$emit("userCreated", responseObj);
+        console.log(responseObj);
+      } else {
+        console.log(err);
+      }
     }
   },
   components: {
     Modal
   }
-}
+};
 </script>

@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import EventBus from '../../event-bus';
+import EventBus from "../../event-bus";
 
 export default {
   data() {
     return {
       selectedItem: null,
       activeClientComponent: null
-    }
+    };
   },
   props: {
     list: Array,
@@ -108,5 +108,4 @@ export default {
 .active {
   background-color: #ebebeb;
 }
-
 </style>
